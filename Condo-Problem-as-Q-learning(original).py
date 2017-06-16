@@ -15,6 +15,9 @@ end_state = [0, 0]
 
 subdivisions = 6
 increment = []
+
+# Define increment for each type
+
 for i in range(types):
     increment.append(quality[i]/subdivisions) # Assume quality = max(price) for a given item
 
@@ -24,7 +27,7 @@ possible_prices = []
 
 con = [[1,1,0,25],[6,3,0,25]]
 
-#Assembling the matrix of possible prices
+#Assembling the matrix of possible prices for each type
 for i in range(types):
     price_type = []
     
@@ -44,17 +47,19 @@ def R(state, price, new_state):
 
 # Q matrix
 
+# Include 0's in possible states
 shape = init_state[0:types]
 for i in range(len(shape)):
     shape[i] += 1
     
 print(shape)
 
+# Add time, possible prices ** number of types
 shape.append(number_periods)
 shape.append((subdivisions + 1) ** types)
 Q = np.zeros(shape)
 
-# Parameters (learning rate, exploration rate, discount factor) 
+# Parameters (Discount factor, learning rate, exploration rate) 
 
 gamma = 0.9
 alpha = 0.001
@@ -68,7 +73,7 @@ def available_actions():
         av_act.append(i)
     return av_act
     
-# Checks for constraints    
+# (Currently unimplemented) Checks for constraints    
 def constraints(state, revenue):
     # for i in range(len(con)):
     #     if time == con[i][0]:
@@ -94,7 +99,8 @@ def transition(state, price):
     prob_arrive = (np.random.normal(mean/(time+1),std_dev/(time+1)))
     if prob_arrive <= 0:
         prob_arrive = 0
-
+        
+  
     prob_arrive = round(prob_arrive)
 
     for i in range(prob_arrive):

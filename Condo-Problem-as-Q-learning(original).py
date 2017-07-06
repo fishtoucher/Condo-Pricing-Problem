@@ -11,7 +11,7 @@ number_periods = 10
 quality = [3, 2, 1, 0]
 init_state = [2, 2, 2]
 types = len(init_state)
-end_state = [0, 0]
+end_state = [0, 0, 0]
 
 subdivisions = 6
 increment = []
